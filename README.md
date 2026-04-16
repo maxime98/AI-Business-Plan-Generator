@@ -117,3 +117,106 @@ Frontend -> Backend -> PostgreSQL
 │   └── ...
 └── docs
     └── project notes / handoff files
+
+```
+## API Summary
+Health
+GET /
+GET /health
+GET /health/ollama
+GET /sections
+Projects
+POST /projects
+GET /projects
+GET /projects/{project_id}
+PUT /projects/{project_id}
+Sections
+POST /projects/{project_id}/generate-section
+POST /projects/{project_id}/improve-section
+PUT /projects/{project_id}/sections/{section_key}
+Database Schema
+projects
+
+## Fields:
+
+id
+name
+industry
+location
+description
+tone
+style
+created_at
+project_sections
+
+## Fields:
+
+id
+project_id
+section_key
+content
+status
+version
+updated_at
+
+There is a unique logical constraint on:
+
+(project_id, section_key)
+## Prompt Strategy
+
+The backend uses:
+
+section-specific prompt instructions
+project context
+project writing preferences (tone, style)
+optional extra user instructions
+
+There are two main AI workflows:
+
+Generate
+
+Writes a new section from project context.
+
+Improve
+
+Takes an existing section and improves it for:
+
+clarity
+professionalism
+credibility
+investor readiness
+Progress Indicator
+
+The UI currently includes a progress indicator with:
+
+animated GIF (walk.gif)
+percentage text
+action label (Generating..., Improving...)
+
+This progress is currently simulated on the frontend, not driven by backend job status.
+
+Ollama Health Check
+
+The backend exposes an Ollama connectivity endpoint:
+
+GET /health/ollama
+
+This can be used from FastAPI docs to confirm:
+
+Ollama is reachable
+the configured URL is correct
+the selected model is configured
+Product Direction
+
+## This project is intended to evolve into a complete business-plan production system.
+
+## Planned directions include:
+
+master section model
+guided interview / questionnaire system
+completeness checker
+DOCX/PDF export
+file upload and source ingestion
+RAG
+multi-agent review workflows
+local persistent memory for advanced agents

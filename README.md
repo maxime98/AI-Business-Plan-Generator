@@ -1,222 +1,487 @@
 # AI Business Plan Generator
 
-A self-hosted application for generating professional business plans section by section using AI.
+Enterprise-grade AI Business Plan Operating System.
 
-## Overview
+This project is not just a business plan writer.  
+It is a structured AI-powered platform designed to:
 
-This project is designed as a structured business-plan production tool, not just a chatbot.
-
-It allows you to:
-
-- create and manage projects
-- store project metadata
-- generate business plan sections with AI
-- improve sections with AI
-- edit sections manually
-- save and version sections
-- prepare the foundation for guided interviews, completeness checks, and document export
-
-The application is currently built with:
-
-- **Next.js** frontend
-- **FastAPI** backend
-- **PostgreSQL** database
-- **Ollama** for local AI generation
-- **Docker Compose** for deployment
-- **Synology NAS** as the hosting environment
+- collect business intelligence
+- normalize business data
+- manage evidence
+- refine business assumptions
+- orchestrate AI reasoning
+- generate investor/bank/USCIS-grade business plans
 
 ---
 
-## Current Features
+# Core Vision
 
-### Project management
+The platform transforms fragmented business information into:
 
-- Create project
-- List projects
-- Edit project settings:
-  - name
-  - industry
-  - location
-  - description
-  - tone
-  - style
-
-### AI section workflow
-
-- Generate business plan sections
-- Improve previously generated sections
-- Add extra instructions per section
-- Edit section content manually
-- Save section content to PostgreSQL
-- Track section version and status
-
-### UX improvements
-
-- Animated GIF progress indicator during Generate and Improve
-- Simulated percentage progress
-- FastAPI health endpoints
-- Ollama connectivity check endpoint
-
----
-
-## Current Business Plan Sections
-
-The current MVP includes these base sections:
-
-- `executive_summary`
-- `company_overview`
-- `market_analysis`
-- `competitive_analysis`
-- `marketing_strategy`
-- `operations_plan`
-- `financial_plan`
-
-This list is expected to evolve after analyzing a larger corpus of business plans.
-
----
-
-## Writing Preferences
-
-Each project can define writing preferences:
-
-### Tone
-- `professional`
-- `formal`
-- `persuasive`
-- `investor_ready`
-- `concise`
-
-### Style
-- `classic`
-- `consulting`
-- `startup`
-- `bank_ready`
-
-These are injected into the prompts used by the AI.
-
----
-
-## Architecture
-
-```text
-Frontend -> Backend -> PostgreSQL
-                  -> Ollama
-                  -> NAS storage
-
-
-/volume1/docker/bpgenerator
-├── docker-compose.yml
-├── frontend
-│   ├── app
-│   ├── public
-│   │   └── pic.gif
-│   └── ...
-├── backend
-│   ├── app
-│   │   └── main.py
-│   └── ...
-└── docs
-    └── project notes / handoff files
-
+```txt
+Structured Business Intelligence
+→ AI Refinement
+→ Evidence Validation
+→ Multi-Agent Reasoning
+→ Professional Business Plans
 ```
-## API Summary
-Health
-GET /
-GET /health
-GET /health/ollama
-GET /sections
-Projects
-POST /projects
-GET /projects
-GET /projects/{project_id}
-PUT /projects/{project_id}
-Sections
-POST /projects/{project_id}/generate-section
-POST /projects/{project_id}/improve-section
-PUT /projects/{project_id}/sections/{section_key}
-Database Schema
-projects
 
-## Fields:
+The system is designed for:
 
-id
-name
-industry
-location
-description
-tone
-style
-created_at
-project_sections
+- startups
+- franchises
+- E2 / USCIS immigration business plans
+- SBA/bank-ready plans
+- investor-ready plans
+- service businesses
+- local businesses
+- expansion projects
 
-## Fields:
+---
 
-id
-project_id
-section_key
-content
-status
-version
-updated_at
+# Current Architecture
 
-There is a unique logical constraint on:
+## 1. Intake & Data Collection Layer
 
-(project_id, section_key)
-## Prompt Strategy
+### Enterprise Intake Template
 
-The backend uses:
+Supports:
 
-section-specific prompt instructions
-project context
-project writing preferences (tone, style)
-optional extra user instructions
+- Excel
+- CSV
+- Google Forms
+- Microsoft Forms
 
-There are two main AI workflows:
+Architecture:
 
-Generate
+```txt
+question
+→ canonical field
+→ structured answer
+→ project intelligence
+```
 
-Writes a new section from project context.
+Each question includes:
 
-Improve
+- help text
+- examples
+- required level
+- audience targeting
+- business type targeting
 
-Takes an existing section and improves it for:
+---
 
-clarity
-professionalism
-credibility
-investor readiness
-Progress Indicator
+## 2. Canonical Field Registry
 
-The UI currently includes a progress indicator with:
+Central structured business ontology.
 
-animated GIF (walk.gif)
-percentage text
-action label (Generating..., Improving...)
+### Features
 
-This progress is currently simulated on the frontend, not driven by backend job status.
+- canonical field keys
+- aliases
+- normalization
+- project metadata mapping
+- required field logic
+- business-type requirements
+- audience-specific requirements
 
-Ollama Health Check
+Example:
 
-The backend exposes an Ollama connectivity endpoint:
+```txt
+company_name
+business_name
+legal_name
+→ company_legal_name
+```
 
-GET /health/ollama
+Supports:
 
-This can be used from FastAPI docs to confirm:
+- franchises
+- restaurants
+- local services
+- retail
+- USCIS/E2
+- startups
 
-Ollama is reachable
-the configured URL is correct
-the selected model is configured
-Product Direction
+---
 
-## This project is intended to evolve into a complete business-plan production system.
+## 3. Intelligent Import Engine
 
-## Planned directions include:
+Structured import pipeline.
 
-master section model
-guided interview / questionnaire system
-completeness checker
-DOCX/PDF export
-file upload and source ingestion
-RAG
-multi-agent review workflows
-local persistent memory for advanced agents
+### Import Flow
+
+```txt
+Excel / CSV / Forms
+→ field normalization
+→ alias mapping
+→ canonical fields
+→ project_answers
+```
+
+### Features
+
+- fuzzy field mapping
+- project metadata extraction
+- registry fallback mapping
+- intelligent section routing
+- safe ingestion
+- QA-friendly import review
+
+---
+
+## 4. Project Intelligence Layer
+
+All business intelligence is stored as:
+
+```txt
+project_answers
+```
+
+instead of large unstructured text blobs.
+
+This allows:
+
+- granular AI refinement
+- field-level validation
+- conflict detection
+- adaptive generation
+- structured scoring
+
+---
+
+## 5. AI Refinement Loop Engine
+
+Iterative AI-driven improvement system.
+
+### Workflow
+
+```txt
+project_answers
+→ consolidation
+→ scoring
+→ weakest section detection
+→ refinement
+→ reconsolidation
+→ rescoring
+```
+
+### Features
+
+- safe reconsolidation
+- weakest-section refinement
+- AI-driven improvements
+- iterative optimization
+- controlled loops
+
+---
+
+## 6. Intelligent Consolidation Engine
+
+Transforms structured answers into professional business plan sections.
+
+### Characteristics
+
+- no direct hallucinated generation
+- structured synthesis
+- section-safe generation
+- field-aware generation
+- context-aware writing
+
+---
+
+## 7. AI Task System
+
+Background AI orchestration system.
+
+### Features
+
+- async tasks
+- live task state
+- generation tracking
+- refinement monitoring
+- safe status visibility
+
+---
+
+## 8. Scoring Engine
+
+Business plan evaluation engine.
+
+### Features
+
+- section scoring
+- overall scoring
+- readiness level
+- critical issue detection
+- next-step recommendations
+
+### Planned Enhancements
+
+- industry-aware scoring
+- financial realism scoring
+- evidence-weighted scoring
+- business consistency scoring
+
+---
+
+## 9. RAG Evidence Engine
+
+The RAG system is designed as an:
+
+```txt
+Evidence Layer
+```
+
+NOT a direct writing engine.
+
+### Philosophy
+
+RAG NEVER writes directly into business plan sections.
+
+Workflow:
+
+```txt
+evidence
+→ field proposal
+→ review
+→ apply to project_answers
+→ reconsolidation
+```
+
+### Features
+
+- evidence registry
+- source reliability scoring
+- evidence proposals
+- conflict detection
+- citation foundation
+- structured evidence governance
+
+### Supported Evidence Types
+
+- franchise documents
+- supplier documents
+- technical sheets
+- FDD documents
+- market reports
+- official sources
+- regulatory sources
+- lease information
+- financial evidence
+
+---
+
+## 10. Conflict Detection Engine
+
+Detects inconsistencies across business data.
+
+Examples:
+
+```txt
+industry = bakery
+services = cleaning
+→ inconsistency flag
+```
+
+Planned:
+
+- cross-section validation
+- financial realism validation
+- operational realism validation
+- industry coherence checks
+
+---
+
+## 11. Evidence Governance System
+
+Future architecture:
+
+```txt
+upload
+→ classify
+→ extract evidence
+→ map to fields
+→ generate proposals
+→ review
+→ apply
+```
+
+### Planned Document Types
+
+- business_plan_model
+- supplier_document
+- franchise_document
+- technical_sheet
+- legal_document
+- official_source
+- market_source
+
+### Allowed Use Policies
+
+- style_only
+- structure_only
+- evidence_only
+- field_proposal_only
+- legal_context_only
+
+---
+
+# Frontend Architecture
+
+Frontend stack:
+
+- Next.js
+- React
+- TypeScript
+
+### Main Panels
+
+- Project List
+- Questionnaire Panel
+- AI Task Panel
+- Refinement Loop Controller
+- Score Panel
+- Field Proposal Review
+- RAG Evidence Engine
+- Consolidation Controls
+
+---
+
+# Backend Architecture
+
+Backend stack:
+
+- FastAPI
+- PostgreSQL
+- SQLAlchemy
+- Ollama / local LLM support
+
+### Core Services
+
+- intake_import
+- intelligent_consolidation
+- refinement_loop
+- field_registry
+- rag_evidence_engine
+- scoring_engine
+- ai_task_manager
+
+---
+
+# Design Philosophy
+
+The system is intentionally:
+
+```txt
+local-first
+single-user
+AI-intelligence-focused
+non-SaaS
+```
+
+Priority is:
+
+- intelligence quality
+- business realism
+- structured reasoning
+- evidence integrity
+- iterative refinement
+
+NOT:
+
+- multi-tenant scaling
+- user management
+- SaaS infrastructure
+
+---
+
+# Current Development Status
+
+Implemented:
+
+- structured intake engine
+- canonical field registry
+- intelligent import system
+- AI refinement loops
+- scoring engine
+- RAG evidence registry
+- conflict detection foundation
+- AI task orchestration
+- section consolidation
+- safe reconsolidation
+
+In Progress:
+
+- adaptive intake system
+- business consistency validator
+- advanced scoring
+- proposal review workflows
+- evidence mapping improvements
+
+Planned:
+
+- multi-agent reasoning engine
+- advanced RAG evidence extraction
+- financial realism engine
+- adaptive questionnaires
+- citation-aware generation
+- investor-grade financial validation
+- USCIS-grade evidence workflows
+
+---
+
+# Future Roadmap
+
+## Iteration 8
+
+### Multi-Agent Evidence Reasoning Engine
+
+Architecture:
+
+```txt
+RAG evidence
+→ specialized agents
+→ debate
+→ confidence scoring
+→ structured recommendations
+→ field proposals
+```
+
+---
+
+# Example System Workflow
+
+```txt
+Client Questionnaire
+→ Import
+→ Canonical Mapping
+→ project_answers
+→ AI Consolidation
+→ Scoring
+→ Weakness Detection
+→ Refinement Loops
+→ Evidence Enrichment
+→ Final Business Plan
+```
+
+---
+
+# Long-Term Goal
+
+Build an AI-powered:
+
+```txt
+Business Intelligence Operating System
+```
+
+capable of producing:
+
+- investor-grade plans
+- USCIS-grade plans
+- SBA-ready plans
+- operational business intelligence
+- structured business reasoning
+- explainable AI business analysis
+
+instead of simple AI-generated text.
